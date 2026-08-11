@@ -162,6 +162,18 @@ para calcular horarios ocupados.
    =QUERY(IMPORTRANGE("ID_PLANILLA_PRIVADA", "Reservas!A2:L"), "SELECT Col3, Col4, Col5, Col6, Col7, Col12 WHERE Col3 IS NOT NULL", 0)
    ```
 
+   Si la planilla está en una configuración regional que usa coma como
+   separador decimal (común en español), Sheets espera **punto y coma**
+   entre los argumentos de la función en vez de coma — si al pegar la
+   fórmula de arriba da `#ERROR!` (error de análisis, no `#REF!`), usa
+   esta variante en su lugar (las comas *dentro* del texto
+   `"SELECT Col3, Col4, …"` quedan igual — son parte del lenguaje de
+   QUERY, no separadores de argumentos):
+
+   ```
+   =QUERY(IMPORTRANGE("ID_PLANILLA_PRIVADA"; "Reservas!A2:L"); "SELECT Col3, Col4, Col5, Col6, Col7, Col12 WHERE Col3 IS NOT NULL"; 0)
+   ```
+
 3. La primera vez, Sheets va a pedir autorización para conectar las dos
    planillas ("Permitir acceso") — acéptala. Si en vez de datos aparece
    `#REF!`, es justo eso: haz clic en la celda y acepta el permiso.
