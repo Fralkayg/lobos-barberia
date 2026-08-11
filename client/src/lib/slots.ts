@@ -1,4 +1,4 @@
-import type { Booking, WorkingHour } from "./types.js";
+import type { BusySlot, WorkingHour } from "../sheets/types";
 
 const SLOT_STEP_MIN = 15;
 const MIN_LEAD_MIN = 30; // no permitir reservar en los próximos 30 min
@@ -38,17 +38,17 @@ export interface AvailabilityParams {
   barberId: string;
   durationMin: number;
   workingHours: WorkingHour[];
-  existingBookings: Booking[];
+  busySlots: BusySlot[];
   now?: Date;
 }
 
-/** Returns the list of free "HH:mm" start times for a barber/day/service duration. */
+/** Returns the list of free "HH:mm" start times for one barber on one day. */
 export function computeAvailableSlots({
   date,
   barberId,
   durationMin,
   workingHours,
-  existingBookings,
+  busySlots,
   now = new Date(),
 }: AvailabilityParams): string[] {
   const day = parseLocalDate(date);
@@ -58,7 +58,7 @@ export function computeAvailableSlots({
   const openMin = toMinutes(hours.startTime);
   const closeMin = toMinutes(hours.endTime);
 
-  const busy = existingBookings
+  const busy = busySlots
     .filter((b) => b.barberId === barberId && b.date === date && b.status !== "cancelada")
     .map((b) => ({ start: toMinutes(b.startTime), end: toMinutes(b.endTime) }));
 
@@ -73,6 +73,37 @@ export function computeAvailableSlots({
     if (!overlaps) slots.push(toHHMM(start));
   }
   return slots;
+}
+
+export interface AggregatedAvailabilityParams {
+  date: string;
+  barberIds: string[];
+  durationMin: number;
+  workingHours: WorkingHour[];
+  busySlots: BusySlot[];
+  now?: Date;
+}
+
+/**
+ * A time is offered if AT LEAST ONE barber is free then — this backs the
+ * "pick a date, then a time" flow, where the barber is picked afterwards
+ * from whoever's actually free at that slot.
+ */
+export function computeAggregatedSlots(params: AggregatedAvailabilityParams): string[] {
+  const set = new Set<string>();
+  for (const barberId of params.barberIds) {
+    for (const slot of computeAvailableSlots({ ...params, barberId })) {
+      set.add(slot);
+    }
+  }
+  return [...set].sort();
+}
+
+/** Which of the given barbers are free for this exact date+time+duration. */
+export function barbersAvailableAt(params: AggregatedAvailabilityParams & { time: string }): string[] {
+  return params.barberIds.filter((barberId) =>
+    computeAvailableSlots({ ...params, barberId }).includes(params.time),
+  );
 }
 
 export function addMinutes(hhmm: string, minutes: number): string {

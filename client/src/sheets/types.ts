@@ -18,34 +18,24 @@ export interface Service {
 export interface WorkingHour {
   barberId: string;
   dayOfWeek: number; // 0 = domingo ... 6 = sábado
-  startTime: string; // "HH:mm"
-  endTime: string; // "HH:mm"
+  startTime: string; // HH:mm
+  endTime: string; // HH:mm
 }
 
-export type BookingStatus = "confirmada" | "cancelada";
-
-export interface Booking {
-  id: string;
+/** Row from the public, PII-free "Disponibilidad" tab. */
+export interface BusySlot {
   barberId: string;
   serviceId: string;
   date: string; // YYYY-MM-DD
   startTime: string; // HH:mm
   endTime: string; // HH:mm
-  customerName: string;
-  customerPhone: string;
-  customerEmail: string;
-  notes: string;
-  status: BookingStatus;
-  createdAt: string; // ISO timestamp
+  status: "confirmada" | "cancelada";
 }
 
-export interface CreateBookingInput {
-  barberId: string;
-  serviceId: string;
-  date: string;
-  startTime: string;
-  customerName: string;
-  customerPhone: string;
-  customerEmail: string;
-  notes?: string;
+/** Everything the booking flow needs, fetched once per visit. */
+export interface BookingData {
+  barbers: Barber[];
+  services: Service[];
+  workingHours: WorkingHour[];
+  busySlots: BusySlot[];
 }

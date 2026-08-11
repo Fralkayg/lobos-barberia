@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { fetchServices } from "../api/client";
-import type { Service } from "../api/types";
+import { fetchServices } from "../sheets/repository";
+import type { Service } from "../sheets/types";
 
 export function useServices() {
   const [services, setServices] = useState<Service[]>([]);

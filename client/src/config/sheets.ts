@@ -1,0 +1,43 @@
+// Configuración de la "base de datos" en Google Sheets + Google Forms.
+// No hay backend: el sitio es 100% estático y el navegador lee/escribe
+// directo contra Google. Ver docs/google-sheets-setup.md para crear las
+// hojas y el formulario, y completar los valores de acá.
+//
+// Nada de esto es secreto (el navegador lo expone igual en el bundle
+// público), así que no hace falta pasarlo por variables de entorno.
+
+export const sheetsConfig = {
+  // ID de la planilla PÚBLICA (la que tiene Barberos/Servicios/Horarios/
+  // Disponibilidad). Se ve en su URL:
+  // https://docs.google.com/spreadsheets/d/ESTE_ES_EL_ID/edit
+  spreadsheetId: "TODO_PEGAR_ID_DE_LA_PLANILLA_PUBLICA",
+
+  // URL de envío del Google Form ("Obtener enlace precompletado" o
+  // inspeccionar el <form action="..."> de la página del formulario;
+  // termina en /formResponse).
+  formActionUrl: "https://docs.google.com/forms/d/e/TODO_ID_DEL_FORM/formResponse",
+
+  // IDs de cada campo del formulario (entry.XXXXXXXXX). Se obtienen desde
+  // "Obtener enlace precompletado" en Google Forms: completa el formulario
+  // de prueba, genera el link, y copia el entry.XXXXXXXXX de cada campo.
+  entryIds: {
+    id: "entry.TODO0",
+    barberId: "entry.TODO1",
+    serviceId: "entry.TODO2",
+    date: "entry.TODO3",
+    startTime: "entry.TODO4",
+    endTime: "entry.TODO5",
+    customerName: "entry.TODO6",
+    customerPhone: "entry.TODO7",
+    customerEmail: "entry.TODO8",
+    notes: "entry.TODO9",
+  },
+};
+
+export function isSheetsConfigured(): boolean {
+  return (
+    !sheetsConfig.spreadsheetId.startsWith("TODO") &&
+    !sheetsConfig.formActionUrl.includes("TODO") &&
+    Object.values(sheetsConfig.entryIds).every((v) => !v.includes("TODO"))
+  );
+}

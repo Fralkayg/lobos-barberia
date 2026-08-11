@@ -4,18 +4,21 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import EventIcon from "@mui/icons-material/Event";
 import PersonIcon from "@mui/icons-material/Person";
 import ContentCutIcon from "@mui/icons-material/ContentCut";
-import type { CreateBookingResponse } from "../../api/types";
+import type { Barber, Service } from "../../sheets/types";
 
 const currency = new Intl.NumberFormat("es-CL", { style: "currency", currency: "CLP", maximumFractionDigits: 0 });
 
 interface Props {
-  result: CreateBookingResponse;
+  bookingId: string;
+  barber: Barber;
+  service: Service;
+  date: string; // YYYY-MM-DD
+  startTime: string;
   onBookAnother: () => void;
 }
 
-export default function ConfirmationStep({ result, onBookAnother }: Props) {
-  const { booking, barber, service } = result;
-  const prettyDate = new Date(`${booking.date}T00:00:00`).toLocaleDateString("es-CL", {
+export default function ConfirmationStep({ bookingId, barber, service, date, startTime, onBookAnother }: Props) {
+  const prettyDate = new Date(`${date}T00:00:00`).toLocaleDateString("es-CL", {
     weekday: "long",
     day: "numeric",
     month: "long",
@@ -24,9 +27,10 @@ export default function ConfirmationStep({ result, onBookAnother }: Props) {
   return (
     <div className="max-w-lg mx-auto text-center py-6">
       <CheckCircleIcon sx={{ fontSize: 64, color: "primary.main" }} />
-      <h2 className="font-display text-4xl text-brand-cream mt-4">¡Reserva confirmada!</h2>
+      <h2 className="font-display text-4xl text-brand-cream mt-4">¡Reserva enviada!</h2>
       <p className="text-brand-cream/60 mt-2">
-        Te esperamos. Guarda estos datos, también te sirven para recordar tu turno.
+        Guarda tu código de reserva <strong className="text-brand-cream/90">{bookingId.slice(0, 8)}</strong>. Si
+        necesitas cambiar algo, menciónalo por Instagram junto con este código.
       </p>
 
       <div className="mt-8 rounded-xl border border-brand-gold/15 bg-brand-charcoal p-6 text-left space-y-4">
@@ -45,7 +49,7 @@ export default function ConfirmationStep({ result, onBookAnother }: Props) {
         <div className="flex items-center gap-3">
           <EventIcon sx={{ color: "primary.main" }} />
           <span className="text-brand-cream/90 capitalize">
-            {prettyDate} a las {booking.startTime} hs
+            {prettyDate} a las {startTime} hs
           </span>
         </div>
       </div>

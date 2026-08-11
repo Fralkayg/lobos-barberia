@@ -8,12 +8,4 @@ export default defineConfig({
   // The Pages workflow passes VITE_BASE_PATH="/lobos-barberia/"; everywhere
   // else (local dev, other hosts) it falls back to root.
   base: process.env.VITE_BASE_PATH || "/",
-  server: {
-    proxy: {
-      "/api": {
-        target: "http://localhost:4000",
-        changeOrigin: true,
-      },
-    },
-  },
 });

@@ -1,11 +1,10 @@
 name: Deploy frontend to GitHub Pages
 
-# Publishes client/ (the React app) to GitHub Pages. The booking API/Excel
-# backend in server/ is NOT static and does not deploy here — it needs its
-# own host (Render, Railway, Fly.io, a VPS, etc). Set the VITE_API_URL
-# repository variable (Settings → Secrets and variables → Actions →
-# Variables) to that backend's public URL before relying on the booking
-# flow; otherwise the site deploys but booking/services/team data won't load.
+# Publishes client/ (the React app) to GitHub Pages. There is no backend to
+# host separately: the site talks directly to Google Sheets (reads) and a
+# Google Form (writes) — see docs/google-sheets-setup.md. Fill in
+# client/src/config/sheets.ts with your spreadsheet/form IDs before the
+# booking flow will have real data to show.
 
 on:
   push:
@@ -45,7 +44,6 @@ jobs:
         env:
           # Repo name -> Pages project-site base path (https://<user>.github.io/lobos-barberia/).
           VITE_BASE_PATH: /lobos-barberia/
-          VITE_API_URL: ${{ vars.VITE_API_URL }}
         run: npm run build
 
       - uses: actions/configure-pages@v5

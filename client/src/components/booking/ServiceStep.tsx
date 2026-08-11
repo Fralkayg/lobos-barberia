@@ -1,28 +1,16 @@
-import { CircularProgress } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import { useServices } from "../../hooks/useServices";
-import type { Service } from "../../api/types";
+import type { Service } from "../../sheets/types";
 
 const currency = new Intl.NumberFormat("es-CL", { style: "currency", currency: "CLP", maximumFractionDigits: 0 });
 
 interface Props {
+  services: Service[];
   selected: Service | null;
   onSelect: (service: Service) => void;
 }
 
-export default function ServiceStep({ selected, onSelect }: Props) {
-  const { services, loading, error } = useServices();
-
-  if (loading) {
-    return (
-      <div className="flex justify-center py-16">
-        <CircularProgress color="primary" />
-      </div>
-    );
-  }
-  if (error) return <p className="text-red-300 text-center py-10">{error}</p>;
-
+export default function ServiceStep({ services, selected, onSelect }: Props) {
   return (
     <div className="grid gap-4 sm:grid-cols-2">
       {services.map((service) => {

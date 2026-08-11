@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link as RouterLink, useLocation } from "react-router-dom";
-import { AppBar, Box, Button, Drawer, IconButton, List, ListItemButton, Toolbar } from "@mui/material";
+import { AppBar, Box, Button, Drawer, IconButton, List, Toolbar } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import { business } from "../../config/business";
@@ -87,14 +87,16 @@ export default function Navbar() {
           <List className="flex flex-col gap-4">
             <NavLinks onClick={() => setOpen(false)} />
           </List>
-          <ListItemButton
+          <Button
             component={RouterLink}
             to="/reservar"
             onClick={() => setOpen(false)}
-            sx={{ justifyContent: "center", bgcolor: "primary.main", color: "primary.contrastText", borderRadius: 999 }}
+            variant="contained"
+            color="primary"
+            fullWidth
           >
             Reservar hora
-          </ListItemButton>
+          </Button>
         </Box>
       </Drawer>
     </AppBar>

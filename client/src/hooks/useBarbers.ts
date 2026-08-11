@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { fetchBarbers } from "../api/client";
-import type { Barber } from "../api/types";
+import { fetchBarbers } from "../sheets/repository";
+import type { Barber } from "../sheets/types";
 
 export function useBarbers() {
   const [barbers, setBarbers] = useState<Barber[]>([]);
