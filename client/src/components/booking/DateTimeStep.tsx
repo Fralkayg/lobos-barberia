@@ -61,7 +61,7 @@ export default function DateTimeStep({ barberId, serviceId, date, time, onChange
 
       <div>
         <h3 className="font-display text-xl text-brand-cream mb-4">Horarios disponibles</h3>
-        {!date && <p className="text-brand-cream/50 text-sm">Elegí una fecha para ver los horarios.</p>}
+        {!date && <p className="text-brand-cream/50 text-sm">Elige una fecha para ver los horarios.</p>}
         {date && loading && (
           <div className="flex justify-center py-10">
             <CircularProgress color="primary" size={26} />
@@ -69,7 +69,7 @@ export default function DateTimeStep({ barberId, serviceId, date, time, onChange
         )}
         {date && error && <Alert severity="error">{error}</Alert>}
         {date && !loading && !error && slots.length === 0 && (
-          <Alert severity="info">No hay horarios disponibles ese día. Probá con otra fecha.</Alert>
+          <Alert severity="info">No hay horarios disponibles ese día. Prueba con otra fecha.</Alert>
         )}
         {date && !loading && slots.length > 0 && (
           <div className="flex flex-wrap gap-2">

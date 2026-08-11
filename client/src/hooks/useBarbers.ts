@@ -14,7 +14,7 @@ export function useBarbers() {
         if (!cancelled) setBarbers(data);
       })
       .catch(() => {
-        if (!cancelled) setError("No pudimos cargar el equipo. Reintentá en unos segundos.");
+        if (!cancelled) setError("No pudimos cargar el equipo. Intenta de nuevo en unos segundos.");
       })
       .finally(() => {
         if (!cancelled) setLoading(false);

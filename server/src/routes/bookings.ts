@@ -43,7 +43,7 @@ bookingsRouter.post("/", async (req, res) => {
     existingBookings: getBookings(),
   });
   if (!freeSlots.includes(startTime!)) {
-    return res.status(409).json({ error: "Ese horario ya no está disponible. Elegí otro." });
+    return res.status(409).json({ error: "Ese horario ya no está disponible. Elige otro." });
   }
 
   const booking: Booking = {

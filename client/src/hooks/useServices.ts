@@ -14,7 +14,7 @@ export function useServices() {
         if (!cancelled) setServices(data);
       })
       .catch(() => {
-        if (!cancelled) setError("No pudimos cargar los servicios. Reintentá en unos segundos.");
+        if (!cancelled) setError("No pudimos cargar los servicios. Intenta de nuevo en unos segundos.");
       })
       .finally(() => {
         if (!cancelled) setLoading(false);

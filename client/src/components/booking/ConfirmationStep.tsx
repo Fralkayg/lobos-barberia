@@ -26,7 +26,7 @@ export default function ConfirmationStep({ result, onBookAnother }: Props) {
       <CheckCircleIcon sx={{ fontSize: 64, color: "primary.main" }} />
       <h2 className="font-display text-4xl text-brand-cream mt-4">¡Reserva confirmada!</h2>
       <p className="text-brand-cream/60 mt-2">
-        Te esperamos. Guardá estos datos, también te sirven para recordar tu turno.
+        Te esperamos. Guarda estos datos, también te sirven para recordar tu turno.
       </p>
 
       <div className="mt-8 rounded-xl border border-brand-gold/15 bg-brand-charcoal p-6 text-left space-y-4">

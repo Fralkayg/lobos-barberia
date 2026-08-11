@@ -46,5 +46,5 @@ export function getApiErrorMessage(error: unknown): string {
     const message = error.response?.data?.error;
     if (typeof message === "string") return message;
   }
-  return "Ocurrió un error inesperado. Intentá nuevamente.";
+  return "Ocurrió un error inesperado. Intenta nuevamente.";
 }
